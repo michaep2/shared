@@ -5,7 +5,7 @@
 # ------------------------------------------------
 
 # Login to the APIC
-session = ACI.Session('https://10.54.61.56', 'admin', 'Cisco123')
+session = Session('https://10.54.61.56', 'admin', 'Cisco123')
 resp = session.login()
 if not resp.ok:
 	print '%% Could not login to APIC'
