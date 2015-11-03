@@ -14,7 +14,7 @@ requests.packages.urllib3.disable_warnings()
 
 # Define static values
 
-Tenant_Name = 'Test-Tenant'
+Tenant_Name = 'Test-DevOps-Tenant'
 AP_Name = 'Demo-App'
 EPG1_Name = 'web-frontend'
 EPG2_Name = 'app-layer'
