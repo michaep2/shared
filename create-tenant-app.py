@@ -116,7 +116,8 @@ if not resp.ok:
     print '%% Could not login to APIC'
     sys.exit(0)
 
-print "\n %s \n" % tenant.get_json()
+print "Success!"
+# print "\n %s \n" % tenant.get_json()
 
 # Push it all to the APIC
 resp = session.push_to_apic(tenant.get_url(),
