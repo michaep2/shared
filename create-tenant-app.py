@@ -13,7 +13,6 @@ import requests.packages.urllib3
 requests.packages.urllib3.disable_warnings()
 
 # Define static values
-
 Tenant_Name = 'Test-DevOps-Tenant'
 AP_Name = 'Demo-App'
 EPG1_Name = 'web-frontend'
@@ -90,23 +89,24 @@ contract2_entry1 = ACI.FilterEntry('entry1',
 app_epg.provide(contract2)
 web_epg.consume(contract2)
 
+
 # Physical Interfaces
-web_if = ACI.Interface('eth', '1', '101', '1', '10', None)
-app_if = ACI.Interface('eth', '1', '101', '1', '11', None)
-db_if = ACI.Interface('eth', '1', '101', '1', '12', None)
+# web_if = ACI.Interface('eth', '1', '101', '1', '10', None)
+# app_if = ACI.Interface('eth', '1', '101', '1', '11', None)
+# db_if = ACI.Interface('eth', '1', '101', '1', '12', None)
 
 # Create vlans on physical interfaces
-vlan10_webif = ACI.L2Interface('vlan10_webif', 'vlan', '10')
-vlan10_webif.attach(web_if)
-vlan20_appif = ACI.L2Interface('vlan20_appif', 'vlan', '20')
-vlan20_appif.attach(app_if)
-vlan30_dbif = ACI.L2Interface('vlan30_dbif', 'vlan', '30')
-vlan30_dbif.attach(db_if)
+# vlan10_webif = ACI.L2Interface('vlan10_webif', 'vlan', '10')
+# vlan10_webif.attach(web_if)
+# vlan20_appif = ACI.L2Interface('vlan20_appif', 'vlan', '20')
+# vlan20_appif.attach(app_if)
+# vlan30_dbif = ACI.L2Interface('vlan30_dbif', 'vlan', '30')
+# vlan30_dbif.attach(db_if)
 
 # Attach EPGs to vlan_if
-web_epg.attach(vlan10_webif)
-app_epg.attach(vlan20_appif)
-db_epg.attach(vlan30_dbif)
+# web_epg.attach(vlan10_webif)
+# app_epg.attach(vlan20_appif)
+# db_epg.attach(vlan30_dbif)
 
 
 # Login to the APIC
