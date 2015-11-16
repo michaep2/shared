@@ -84,16 +84,35 @@ print resp
 #### VLAN Pools ####
 
 
-# This one creates the Dyanmic VLAN Pool
+# This one creates the Dyanmic VLAN Pool for VMM Domain
 jsondata = {"fvnsVlanInstP":{"attributes":{"allocMode":"dynamic","descr":"","dn":"uni/infra/vlanns-[VlanPool_VMM_vCenter2]-dynamic","name":"VlanPool_VMM_vCenter2","ownerKey":"","ownerTag":""},"children":[{"fvnsEncapBlk":{"attributes":{"allocMode":"inherit","descr":"","from":"vlan-1250","name":"","to":"vlan-1299"}}}]}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/vlanns-[VlanPool_VMM_vCenter2]-dynamic.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
+
+# This one creates the Dyanmic VLAN Pool for UCS domain
+jsondata = {"fvnsVlanInstP":{"attributes":{"allocMode":"dynamic","descr":"","dn":"uni/infra/vlanns-[VlanPool_UCS_Domain2]-dynamic","name":"VlanPool_UCS_Domain2","ownerKey":"","ownerTag":""},"children":[{"fvnsEncapBlk":{"attributes":{"allocMode":"inherit","descr":"","from":"vlan-1200","name":"","to":"vlan-1250"}}}]}}
+resp = sesh.post('https://{0}/api/node/mo/uni/infra/vlanns-[VlanPool_VMM_vCenter2]-dynamic.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
+print resp
+
+
+#### AEPs ####
+
+# This one creates the AEP and maps the vCenter to it, as well as creates the vSwitch Override Policy so that CDP Enabled, LLDP Disabled and MAC Pinning are all used
+jsondata = {"infraAttEntityP":{"attributes":{"descr":"","dn":"uni/infra/attentp-AEP_VMM_vCenter","name":"AEP_VMM_vCenter","ownerKey":"","ownerTag":""},"children":[{"infraRsDomP":{"attributes":{"tDn":"uni/vmmp-VMware/dom-VMM_ACI_vDVS_1"}}},{"infraAttPolicyGroup":{"attributes":{"descr":"","name":""},"children":[{"infraRsOverrideCdpIfPol":{"attributes":{"tnCdpIfPolName":"IntPol_CDP_Enable"}}},{"infraRsOverrideLacpPol":{"attributes":{"tnLacpLagPolName":"IntPol_LACP_MacPinning"}}},{"infraRsOverrideLldpIfPol":{"attributes":{"tnLldpIfPolName":"IntPol_LLDP_Disable"}}}]}}]}}
+resp = sesh.post('https://{0}/api/node/mo/uni/infra.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
+print resp
+
+# This one creates the AEP for the UCS domain, as well as override Policy so that CDP Enabled, LLDP Disabled and LACP Active are all used
+jsondata = {"infraAttEntityP":{"attributes":{"descr":"","dn":"uni/infra/attentp-AEP_UCS2_Domain2","name":"AEP_UCS2_Domain2","ownerKey":"","ownerTag":""},"children":[{"infraRsDomP":{"attributes":{"tDn":"uni/vmmp-VMware/dom-VMM_ACI_vDVS_1"}}},{"infraAttPolicyGroup":{"attributes":{"descr":"","name":""},"children":[{"infraRsOverrideCdpIfPol":{"attributes":{"tnCdpIfPolName":"IntPol_CDP_Enable"}}},{"infraRsOverrideLacpPol":{"attributes":{"tnLacpLagPolName":"IntPol_LACP_Active"}}},{"infraRsOverrideLldpIfPol":{"attributes":{"tnLldpIfPolName":"IntPol_LLDP_Disable"}}}]}}]}}
+resp = sesh.post('https://{0}/api/node/mo/uni/infra.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
+print resp
+
 
 
 #### Interface Policy Groups ####
 
 # This one creates the first Interface Policy Group for our vPC from both Leafs down to FI-A
-jsondata = {"infraAccBndlGrp":{"attributes":{"descr":"","dn":"uni/infra/funcprof/accbundle-IntPolgrp_vPC_FI_A","lagT":"node","name":"IntPolgrp_vPC_FI_A","ownerKey":"","ownerTag":""},"children":[{"infraRsMonIfInfraPol":{"attributes":{"tnMonInfraPolName":""}}},{"infraRsLldpIfPol":{"attributes":{"tnLldpIfPolName":"IntPol_LLDP_Enable"}}},{"infraRsStpIfPol":{"attributes":{"tnStpIfPolName":""}}},{"infraRsL2IfPol":{"attributes":{"tnL2IfPolName":""}}},{"infraRsCdpIfPol":{"attributes":{"tnCdpIfPolName":"IntPol_CDP_Enable"}}},{"infraRsMcpIfPol":{"attributes":{"tnMcpIfPolName":""}}},{"infraRsAttEntP":{"attributes":{"tDn":"uni/infra/attentp-Dev-Infra-VMM-AEP"}}},{"infraRsLacpPol":{"attributes":{"tnLacpLagPolName":"IntPol_LACP_Active"}}},{"infraRsStormctrlIfPol":{"attributes":{"tnStormctrlIfPolName":""}}},{"infraRsHIfPol":{"attributes":{"tnFabricHIfPolName":""}}}]}}
+jsondata = {"infraAccBndlGrp":{"attributes":{"descr":"","dn":"uni/infra/funcprof/accbundle-IntPolgrp_vPC_FI_A","lagT":"node","name":"IntPolgrp_vPC_FI_A","ownerKey":"","ownerTag":""},"children":[{"infraRsMonIfInfraPol":{"attributes":{"tnMonInfraPolName":""}}},{"infraRsLldpIfPol":{"attributes":{"tnLldpIfPolName":"IntPol_LLDP_Enable"}}},{"infraRsStpIfPol":{"attributes":{"tnStpIfPolName":""}}},{"infraRsL2IfPol":{"attributes":{"tnL2IfPolName":""}}},{"infraRsCdpIfPol":{"attributes":{"tnCdpIfPolName":"IntPol_CDP_Disable"}}},{"infraRsMcpIfPol":{"attributes":{"tnMcpIfPolName":""}}},{"infraRsAttEntP":{"attributes":{"tDn":"uni/infra/attentp-Dev-Infra-VMM-AEP"}}},{"infraRsLacpPol":{"attributes":{"tnLacpLagPolName":"IntPol_LACP_Active"}}},{"infraRsStormctrlIfPol":{"attributes":{"tnStormctrlIfPolName":""}}},{"infraRsHIfPol":{"attributes":{"tnFabricHIfPolName":""}}}]}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/funcprof/accbundle-IntPolgrp_vPC_FI_A.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 
 # This one creates the first Interface Policy Group for our vPC from both Leafs down to FI-B
