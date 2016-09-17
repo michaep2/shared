@@ -27,7 +27,7 @@ print status
 
 
 
-# This first one creates the VMM Domain
+# Creates the VMM Domain
 jsondata = {"vmmDomP":{"attributes":{"dn":"uni/vmmp-VMware/dom-VMM_ACI_vDVS_1","enfPref":"hw","mcastAddr":"0.0.0.0","mode":"default","name":"VMM_ACI_vDVS_1","ownerKey":"","ownerTag":""},"children":[{"vmmRsDefaultStpIfPol":{"attributes":{"tnStpIfPolName":"default"}}},{"vmmRsDefaultFwPol":{"attributes":{"tnNwsFwPolName":"default"}}},{"vmmRsDefaultLldpIfPol":{"attributes":{"tnLldpIfPolName":"IntPol_LLDP_Disable"}}},{"vmmCtrlrP":{"attributes":{"dvsVersion":"default","hostOrIp":vcenter_ip,"inventoryTrigSt":"untriggered","mode":"default","msftConfigIssues":"","name":vmm_controller,"port":"443","rootContName":vCenter_Datacenter,"scope":"vm","statsMode":"disabled"},"children":[{"vmmRsAcc":{"attributes":{"tDn":"uni/vmmp-VMware/dom-VMM_ACI_vDVS_1/usracc-vcenter-credentials-sedk"}}}]}},{"infraRsVlanNs":{"attributes":{"tDn":"uni/infra/vlanns-[VlanPool_VMM_vCenter2]-dynamic"}}},{"vmmRsDefaultCdpIfPol":{"attributes":{"tnCdpIfPolName":"IntPol_CDP_Enable"}}},{"vmmRsDefaultLacpLagPol":{"attributes":{"tnLacpLagPolName":"default"}}},{"vmmRsDefaultL2InstPol":{"attributes":{"tnL2InstPolName":"default"}}},{"vmmUsrAccP":{"attributes":{"descr":"","name":vmm_credentials,"ownerKey":"","ownerTag":"","usr":vcenter_user,"pwd":vcenter_password}}}]}}
 resp = sesh.post('https://{0}/api/node/mo/uni/vmmp-VMware/dom-VMM_ACI_vDVS_1.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
@@ -35,47 +35,47 @@ print resp
 
 #### Interface Polcicies ####
 
-# This one creates the Link level Interface Policy for '1GE auto"
+# Creates the Link level Interface Policy for '1GE auto"
 jsondata = {"fabricHIfPol":{"attributes":{"speed":"1G","descr":"","dn":"uni/infra/hintfpol-IntPol_1G_Auto","name":"IntPol_1G_Auto","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lacplagp-IntPol_1G_Auto.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This one creates the Link level Interface Policy for '10GE auto"
+# Creates the Link level Interface Policy for '10GE auto"
 jsondata = {"fabricHIfPol":{"attributes":{"speed":"10G","descr":"","dn":"uni/infra/hintfpol-IntPol_10G_Auto","name":"IntPol_10G_Auto","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lacplagp-IntPol_10G_Auto.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This next one creates the Interface Policy for 'CDP Enable' just in case we need it
+# Creates the Interface Policy for 'CDP Enable' just in case we need it
 jsondata = {"cdpIfPol":{"attributes":{"adminSt":"enabled","descr":"","dn":"uni/infra/cdpIfP-IntPol_CDP_Enable","name":"IntPol_CDP_Enable","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/cdpIfP-Dev-Infra-CDP-disable.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This next one creates the Interface Policy for 'CDP Disable' just in case we need it
+# Creates the Interface Policy for 'CDP Disable' just in case we need it
 jsondata = {"cdpIfPol":{"attributes":{"adminSt":"disabled","descr":"","dn":"uni/infra/cdpIfP-IntPol_CDP_Disable","name":"IntPol_CDP_Disable","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/cdpIfP-Dev-Infra-CDP-disable.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This one creates the Interface Policy for 'LLDP Ensable' just in case we need it
+# Creates the Interface Policy for 'LLDP Ensable' just in case we need it
 jsondata = {"lldpIfPol":{"attributes":{"adminRxSt":"enabled","adminTxSt":"enabled","descr":"","dn":"uni/infra/lldpIfP-IntPol_LLDP_Enable","name":"IntPol_LLDP_Enable","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lldpIfP-IntPol_LLDP_Enable.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This one creates the Interface Policy for 'LLDP Disable'
+# Creates the Interface Policy for 'LLDP Disable'
 jsondata = {"lldpIfPol":{"attributes":{"adminRxSt":"disabled","adminTxSt":"disabled","descr":"","dn":"uni/infra/lldpIfP-IntPol_LLDP_Disable","name":"IntPol_LLDP_Disable","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lldpIfP-IntPol_LLDP_Disable.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This one creates the Interface Policy for 'LACP Active'
+# Creates the Interface Policy for 'LACP Active'
 jsondata = {"lacpLagPol":{"attributes":{"ctrl":"fast-sel-hot-stdby,graceful-conv,susp-individual","descr":"","dn":"uni/infra/lacplagp-IntPol_LACP_Active","maxLinks":"16","minLinks":"1","mode":"active","name":"IntPol_LACP_Active","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lacplagp-IntPol_LACP_Active.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This one creates the Interface Policy for 'LACP Off'
+# Creates the Interface Policy for 'LACP Off'
 jsondata = {"lacpLagPol":{"attributes":{"ctrl":"fast-sel-hot-stdby,graceful-conv,susp-individual","descr":"","dn":"uni/infra/lacplagp-IntPol_LACP_Off","maxLinks":"16","minLinks":"1","mode":"off","name":"IntPol_LACP_Off","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lacplagp-IntPol_LACP_Off.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
 
-# This one creates the Interface Policy for 'LACP MAC Pinning' for ESXi vSwitch
+# Creates the Interface Policy for 'LACP MAC Pinning' for ESXi vSwitch
 jsondata = {"lacpLagPol":{"attributes":{"ctrl":"fast-sel-hot-stdby,graceful-conv,susp-individual","descr":"","dn":"uni/infra/lacplagp-IntPol_LACP_MacPinning","maxLinks":"16","minLinks":"1","mode":"mac-pin","name":"IntPol_LACP_MacPinning","ownerKey":"","ownerTag":""}}}
 resp = sesh.post('https://{0}/api/node/mo/uni/infra/lacplagp-IntPol_LACP_MacPinning.json'.format(apic), cookies = cookies, data = json.dumps(jsondata), verify = False)
 print resp
